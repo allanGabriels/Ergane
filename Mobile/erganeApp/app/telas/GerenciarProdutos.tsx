@@ -105,12 +105,13 @@ const styles = StyleSheet.create({
   },
 
   botaoEsquerda: {
-    backgroundColor: PALETA.corNegativo,
+    backgroundColor: PALETA.corPositivo,
+   
     borderWidth: 1,
   },
 
   botaoDireita: {
-    backgroundColor: PALETA.corPositivo,
+     backgroundColor: PALETA.corNegativo,
     borderWidth: 1,
   },
 
