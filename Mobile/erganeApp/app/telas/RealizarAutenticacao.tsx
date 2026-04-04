@@ -10,14 +10,14 @@ export default function Tela3() {
       <Text style={styles.subtitle}>Acesse sua conta</Text>
 
       <TextInput
-        placeholder="Usuário / Email"
-        placeholderTextColor={PALETA.cinzaClaro}
+        placeholder="Email"
+        placeholderTextColor={PALETA.corTexto}
         style={styles.input}
       />
 
       <TextInput
         placeholder="Senha"
-        placeholderTextColor={PALETA.cinzaClaro}
+        placeholderTextColor={PALETA.corTexto}
         secureTextEntry
         style={styles.input}
       />
@@ -35,7 +35,7 @@ export default function Tela3() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: PALETA.branco,
+    backgroundColor: "#ffffff",
     justifyContent: "center",
     padding: 24,
   },
@@ -50,18 +50,19 @@ const styles = StyleSheet.create({
 
   subtitle: {
     fontSize: 16,
-    color: PALETA.cinzaEscuro,
+    color: PALETA.corTexto,
     textAlign: "center",
     marginBottom: 32,
   },
 
   input: {
-    backgroundColor: PALETA.cinzaMuitoClaro,
     padding: 14,
     borderRadius: 10,
     marginBottom: 16,
     fontSize: 16,
-    color: PALETA.preto,
+    borderWidth: 1,
+    borderColor: PALETA.verdeFolha,
+    color: PALETA.corTexto,
   },
 
   button: {
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: PALETA.branco,
+    color: "#ffffff",
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -81,6 +82,6 @@ const styles = StyleSheet.create({
   footerText: {
     textAlign: "center",
     marginTop: 20,
-    color: PALETA.cinzaMedio,
+    color: PALETA.corTexto,
   },
 });
