@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, View, Platform } from "react-native";
+import { View, Platform } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import Tela1 from "./telas/RealizarVenda";
 import Tela2 from "./telas/GerenciarProdutos";
@@ -41,8 +42,10 @@ export default function RootLayout() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>{renderTela()}</View>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>{renderTela()}</View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
