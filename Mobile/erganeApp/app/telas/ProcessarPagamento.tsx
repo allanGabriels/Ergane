@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TextInput, Text, TouchableOpacity, Image } from 'react-native';
 
 // O componente agora inicia direto no status 'processando'
 export default function App({ navigation }) {
@@ -49,6 +49,7 @@ export default function App({ navigation }) {
       <View style={styles.fundo}>
         <View style={styles.centro}>
           <Text style={styles.texto}>aguardando pagamento</Text>
+          <Image source={require('../../assets/images/piggy_bank.jpg')} style={styles.imagem} />
           <TouchableOpacity style={styles.botao} onPress={handleCancelar}>
             <Text style={styles.textoBotao}>Cancelar</Text>
           </TouchableOpacity>
@@ -94,6 +95,13 @@ const styles = StyleSheet.create({
     fontSize: 18,             
     fontWeight: 'bold',
     marginBottom: 15,       
+  },
+  imagem: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 20,
+    resizeMode: 'contain',
   },
   textoSucesso: {
     color: '#F4F4F6',

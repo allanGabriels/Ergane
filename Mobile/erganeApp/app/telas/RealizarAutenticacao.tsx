@@ -1,87 +1,158 @@
-import React from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { PALETA } from "../../constants/paleta";
+import React, { useState } from 'react';
+import {StyleSheet, Text, View, Image, ImageBackground, TextInput, TouchableOpacity, Alert, ActivityIndicator,} from 'react-native';
 
-export default function Tela3() {
+import axios from 'axios';
+
+export default function App() {
+  const [cpf, setCpf] = useState('');
+  const [senha, setSenha] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const imagemFundo = { uri: 'https://lh5.googleusercontent.com/proxy/eEiMG7Hv11WwI8whsyj5KqjpJF2NnrlJm6IZ4_Y7TgRxEJkT3w_-UnVy1YvLJzUCAGUs-h7_QjONRHUEKYP3wOoJ3A4PloFNz8QCJSPhdL174KEuQM0t2V0' };
+  const imagemLogo = { uri: 'https://images.seeklogo.com/logo-png/59/1/atacadao-logo-png_seeklogo-593562.png' };
+
+  async function handleLogin() {
+    if (!cpf || !senha) {
+      Alert.alert(
+        'Erro',
+        'Preencha o CPF e a Senha para continuar.'
+      );
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await axios.post(
+        'https://sua-api.com/login',
+        {
+          cpf,
+          senha,
+        }
+      );
+
+      Alert.alert(
+        'Sucesso',
+        'Login realizado com sucesso!'
+      );
+
+      console.log(response.data);
+
+    } catch (error) {
+
+      if (error.response?.status === 401) {
+        Alert.alert(
+          'Erro',
+          'CPF ou senha incorretos.'
+        );
+      } else {
+        Alert.alert(
+          'Erro',
+          'Não foi possível conectar ao servidor.'
+        );
+      }
+
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <View style={styles.container}>
-      
-      <Text style={styles.title}>Ergane</Text>
-      <Text style={styles.subtitle}>Acesse sua conta</Text>
+    <ImageBackground
+      source = {imagemFundo}
+      style = {styles.imagemFundo}
+    >
+      <View style = {styles.degrade}/>
+      <View style = {styles.tudo}>
 
-      <TextInput
-        placeholder="Email"
-        placeholderTextColor={PALETA.corTexto}
-        style={styles.input}
-      />
+        <View style = {styles.cabecalho}>
+          <Image source = {imagemLogo} style = {styles.logo}/>
+          <Text style = {styles.nome}>Ergane</Text>
+        </View>
 
-      <TextInput
-        placeholder="Senha"
-        placeholderTextColor={PALETA.corTexto}
-        secureTextEntry
-        style={styles.input}
-      />
+        <View style={styles.login}>
+          <TextInput
+            style={styles.input}
+            placeholder = 'CPF'
+            placeholderTextColor = '#053225A1'
+            value = {cpf}
+            onChangeText = {setCpf}
+            keyboardType = "numeric"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder = 'Senha'
+            placeholderTextColor = '#053225A1'
+            value = {senha}
+            onChangeText = {setSenha}
+            secureTextEntry = {true}
+          />
+          <TouchableOpacity style = {[styles.botao,loading]}
+            onPress = {handleLogin}
+            disabled = {loading}
+          >
+            {loading ? (
+              <ActivityIndicator color = '#FFFFFF'/>
+            ) : (
+              <Text style = {styles.entrar}>
+                Entrar
+              </Text>
+            )}
+          </TouchableOpacity>
+        </View>
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Entrar</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.footerText}>Esqueceu a senha?</Text>
-
-    </View>
+      </View> 
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  imagemFundo: {
     flex: 1,
-    backgroundColor: "#ffffff",
-    justifyContent: "center",
-    padding: 24,
   },
-
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: PALETA.verdeEsmeralda,
-    textAlign: "center",
-    marginBottom: 8,
+  degrade: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(5, 50, 37, 0.75)',
   },
-
-  subtitle: {
-    fontSize: 16,
-    color: PALETA.corTexto,
-    textAlign: "center",
-    marginBottom: 32,
+  tudo: {
+    flex: 1,
   },
-
+  cabecalho: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  logo: {
+    width: 140,
+    height: 140,
+    margin: 20
+  },
+  nome: {
+    color: '#FFFFFF',
+    fontSize: 40,
+  },
+  login: {
+    flex: 1,
+    justifyContent: 'center'
+  },
   input: {
-    padding: 14,
-    borderRadius: 10,
-    marginBottom: 16,
+    borderRadius: 18,
+    paddingVertical: 12,
+    paddingLeft: 20,
+    marginHorizontal: 50,
+    marginBottom: 15,
+    backgroundColor: '#D9D9D9'
+  },
+  botao: {
+    borderRadius: 18,
+    paddingVertical: 12,
+    marginHorizontal: 50,
+    marginBottom: 15,
+    backgroundColor: '#0C7858',
+    alignItems: 'center'
+  },
+  entrar: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
     fontSize: 16,
-    borderWidth: 1,
-    borderColor: PALETA.verdeFolha,
-    color: PALETA.corTexto,
-  },
-
-  button: {
-    backgroundColor: PALETA.verdeEsmeralda,
-    padding: 16,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 10,
-  },
-
-  buttonText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-
-  footerText: {
-    textAlign: "center",
-    marginTop: 20,
-    color: PALETA.corTexto,
   },
 });
